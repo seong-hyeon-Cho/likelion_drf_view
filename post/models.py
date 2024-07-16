@@ -18,7 +18,7 @@ class Post(models.Model):
     tag= models.ManyToManyField(Tag,blank=True)
     image = models.ImageField(upload_to=image_upload_path,blank=True, null=True)
     likes = models.PositiveIntegerField(default=0)
-    likes_user = models.ManyToManyField(User, related_name='like_post', blank=True, null=True)
+    likes_user = models.ManyToManyField(User, related_name='like_post', blank=True)
 
 
 class Comment(models.Model):

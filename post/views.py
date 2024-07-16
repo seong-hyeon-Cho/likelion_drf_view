@@ -50,19 +50,19 @@ class PostViewSet(viewsets.ModelViewSet):
             return[IsAuthenticated()]
         return []
 
-    @action(methods=["GET"], detail=True)
+    @action(methods=["POST"], detail=True)
     def likes(self, request, pk=None):
-        like_post = self.get_object()
+        post=self.get_object()
         user = request.user
 
-        if user in like_post.like_user.all():
-            like_post.like_user.remove(user)
-            like_post.like_cnt -= 1
+        if user in post.likes_user.all():
+            post.likes_user.remove(user)
+            post.likes -= 1
         else:
-            like_post.like_user.add(user)
-            like_post.like_cnt += 1
-        like_post.save(update_fields=["likes"])
-        return Response()
+            post.likes_user.add(user)
+            post.likes += 1
+        post.save(update_fields=["likes"])
+        return Response({"status": "success", "likes": post.likes})
     
 
 
